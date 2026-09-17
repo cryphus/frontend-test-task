@@ -1,0 +1,105 @@
+@import '@fontsource/inter/300.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+
+:root {
+  --avanti-primary: #2491aa;
+  --avanti-primary-dark: #1d7a8f;
+  --avanti-primary-soft: #eaf4f6;
+  --avanti-primary-border: #e2edf0;
+  --avanti-secondary: #245caa;
+  --avanti-text: #1a2332;
+  --avanti-text-strong: #09090b;
+  --avanti-muted: #71717a;
+  --avanti-muted-light: #a1a1aa;
+  --avanti-border: #e4e4e7;
+  --avanti-border-strong: #d4d4d8;
+  --avanti-surface: #ffffff;
+  --avanti-surface-alt: #f4f4f5;
+  --avanti-page: #f8fafb;
+  --avanti-overlay: rgba(26, 35, 50, 0.45);
+  --avanti-danger: #ef4444;
+  --avanti-success: #2491aa;
+
+  --avanti-radius-sm: 8px;
+  --avanti-radius-md: 10px;
+  --avanti-radius-lg: 16px;
+  --avanti-radius-xl: 24px;
+  --avanti-radius-pill: 999px;
+
+  --avanti-shadow-card: 0 2px 8px rgba(26, 35, 50, 0.06);
+  --avanti-shadow-soft: 0 4px 16px rgba(26, 35, 50, 0.03);
+  --avanti-shadow-popup: 0 8px 24px rgba(0, 0, 0, 0.25);
+
+  --avanti-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --avanti-container: 1440px;
+  --avanti-gutter: 72px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--avanti-font);
+  font-size: 14px;
+  line-height: 1.25;
+  color: var(--avanti-text);
+  background: var(--avanti-page);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.avanti-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --avanti-gutter: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --avanti-gutter: 16px;
+  }
+}
