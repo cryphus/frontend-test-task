@@ -1,16 +1,20 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   padded: { type: Boolean, default: true },
   shadow: { type: String, default: 'none', validator: (v) => ['none', 'card', 'soft'].includes(v) },
   tag: { type: String, default: 'section' },
 })
+
+const classes = computed(() => [`avanti-card--shadow-${props.shadow}`, { 'avanti-card--padded': props.padded }])
 </script>
 
 <template>
   <component
     :is="tag"
     class="avanti-card"
-    :class="[`avanti-card--shadow-${shadow}`, { 'avanti-card--padded': padded }]"
+    :class="classes"
   >
     <slot />
   </component>

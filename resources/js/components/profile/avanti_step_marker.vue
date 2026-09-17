@@ -10,11 +10,13 @@ const props = defineProps({
 
 const iconName = computed(() => (props.status === 'done' ? 'check' : props.icon))
 const iconSize = computed(() => (props.size === 'lg' ? 'lg' : 'sm'))
+const iconStroke = computed(() => (props.status === 'done' ? 2.5 : undefined))
+const classes = computed(() => [`avanti-step-marker--${props.status}`, `avanti-step-marker--${props.size}`])
 </script>
 
 <template>
-  <span class="avanti-step-marker" :class="[`avanti-step-marker--${status}`, `avanti-step-marker--${size}`]">
-    <AvantiIcon :name="iconName" :size="iconSize" :stroke-width="status === 'done' ? 2.5 : undefined" />
+  <span class="avanti-step-marker" :class="classes">
+    <AvantiIcon :name="iconName" :size="iconSize" :stroke-width="iconStroke" />
   </span>
 </template>
 

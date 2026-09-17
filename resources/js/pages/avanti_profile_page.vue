@@ -24,8 +24,22 @@ const modals = {
 const activeModal = ref(null)
 const modalComponent = computed(() => modals[activeModal.value] ?? null)
 
+const hasUser = computed(() => Boolean(state.user))
+
 function openModal(name) {
   activeModal.value = name
+}
+
+function openNameModal() {
+  openModal('name')
+}
+
+function openEmailModal() {
+  openModal('email')
+}
+
+function openPasswordModal() {
+  openModal('password')
 }
 
 function closeModal() {
@@ -47,9 +61,7 @@ function onOpenStep(step) {
 </script>
 
 <template>
-  <AvantiPageState v-if="!state.user" :loading="state.loading" :error="state.error" />
-
-  <div v-else class="avanti-profile-page">
+  <div v-if="hasUser" class="avanti-profile-page">
     <div class="avanti-profile-page__main">
       <AvantiStepper :steps="state.steps" :current="currentStepIndex" :completed="completedSteps" />
       <AvantiPersonalCard
@@ -57,15 +69,15 @@ function onOpenStep(step) {
         :iban="state.user.iban"
         editable
         show-iban
-        @edit="openModal('name')"
+        @edit="openNameModal"
       />
       <AvantiSecurityCard
         :email-verified="state.user.emailVerified"
         :email-change-allowed="state.user.emailChangeAllowed"
         :send-code="profile.sendVerificationCode"
         :confirm-code="profile.confirmVerificationCode"
-        @change-password="openModal('password')"
-        @change-email="openModal('email')"
+        @change-password="openPasswordModal"
+        @change-email="openEmailModal"
         @verified="onVerified"
       />
     </div>
@@ -85,6 +97,8 @@ function onOpenStep(step) {
 
     <component :is="modalComponent" v-if="modalComponent" @close="closeModal" @saved="onSaved" />
   </div>
+
+  <AvantiPageState v-else :loading="state.loading" :error="state.error" />
 </template>
 
 <style scoped>

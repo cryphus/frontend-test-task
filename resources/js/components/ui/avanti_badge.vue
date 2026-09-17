@@ -1,15 +1,19 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   variant: {
     type: String,
     default: 'soft',
     validator: (v) => ['soft', 'light', 'count', 'success'].includes(v),
   },
 })
+
+const variantClass = computed(() => `avanti-badge--${props.variant}`)
 </script>
 
 <template>
-  <span class="avanti-badge" :class="`avanti-badge--${variant}`">
+  <span class="avanti-badge" :class="variantClass">
     <slot />
   </span>
 </template>

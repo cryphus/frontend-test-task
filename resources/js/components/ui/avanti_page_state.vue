@@ -1,10 +1,14 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   loading: { type: Boolean, default: false },
   error: { type: String, default: '' },
   title: { type: String, default: '' },
   text: { type: String, default: '' },
 })
+
+const message = computed(() => props.error || props.text)
 </script>
 
 <template>
@@ -13,7 +17,7 @@ defineProps({
     <p v-if="loading" class="avanti-page-state__text">Caricamento…</p>
     <template v-else>
       <h1 v-if="title" class="avanti-page-state__title">{{ title }}</h1>
-      <p class="avanti-page-state__text">{{ error || text }}</p>
+      <p class="avanti-page-state__text">{{ message }}</p>
       <slot />
     </template>
   </div>

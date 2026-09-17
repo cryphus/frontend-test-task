@@ -6,6 +6,7 @@ import { useAvantiForm } from '../../composables/avanti_use_form.js'
 import { useAvantiProfile } from '../../composables/avanti_use_profile.js'
 
 const MIN_LENGTH = 8
+const LENGTH_HINT = `Minimo ${MIN_LENGTH} caratteri.`
 
 const emit = defineEmits(['close', 'saved'])
 const profile = useAvantiProfile()
@@ -19,7 +20,7 @@ const { fields, errors, formError, loading, submit } = useAvantiForm({
 function validate(values) {
   const result = {}
   if (!values.currentPassword) result.currentPassword = 'Inserisci la password attuale.'
-  if (values.password.length < MIN_LENGTH) result.password = `Minimo ${MIN_LENGTH} caratteri.`
+  if (values.password.length < MIN_LENGTH) result.password = LENGTH_HINT
   if (values.password !== values.passwordConfirmation) {
     result.passwordConfirmation = 'Le password non coincidono.'
   }
@@ -55,7 +56,7 @@ function close() {
         label="Nuova password"
         type="password"
         autocomplete="new-password"
-        :hint="`Minimo ${MIN_LENGTH} caratteri.`"
+        :hint="LENGTH_HINT"
         :error="errors.password"
       />
       <AvantiInput

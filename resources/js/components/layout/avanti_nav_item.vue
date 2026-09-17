@@ -1,23 +1,29 @@
 <script setup>
+import { computed } from 'vue'
 import AvantiIcon from '../ui/avanti_icon.vue'
 
-defineProps({
+const ICON_STROKE = { tab: 2, stacked: 1.25 }
+
+const props = defineProps({
   to: { type: [String, Object], required: true },
   label: { type: String, required: true },
   icon: { type: String, default: '' },
   variant: { type: String, default: 'tab', validator: (v) => ['tab', 'stacked'].includes(v) },
 })
+
+const variantClass = computed(() => `avanti-nav-item--${props.variant}`)
+const iconStroke = computed(() => ICON_STROKE[props.variant])
 </script>
 
 <template>
   <RouterLink
     :to="to"
     class="avanti-nav-item"
-    :class="`avanti-nav-item--${variant}`"
+    :class="variantClass"
     active-class="avanti-nav-item--active"
   >
     <span v-if="icon" class="avanti-nav-item__icon">
-      <AvantiIcon :name="icon" size="sm" :stroke-width="variant === 'tab' ? 2 : 1.25" />
+      <AvantiIcon :name="icon" size="sm" :stroke-width="iconStroke" />
     </span>
     <span>{{ label }}</span>
   </RouterLink>

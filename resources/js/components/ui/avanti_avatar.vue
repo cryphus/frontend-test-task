@@ -1,5 +1,7 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   src: { type: String, default: '' },
   alt: { type: String, default: '' },
   initials: { type: String, default: '' },
@@ -7,10 +9,12 @@ defineProps({
   online: { type: Boolean, default: false },
   ringed: { type: Boolean, default: false },
 })
+
+const classes = computed(() => [`avanti-avatar--${props.size}`, { 'avanti-avatar--ringed': props.ringed }])
 </script>
 
 <template>
-  <span class="avanti-avatar" :class="[`avanti-avatar--${size}`, { 'avanti-avatar--ringed': ringed }]">
+  <span class="avanti-avatar" :class="classes">
     <img v-if="src" class="avanti-avatar__image" :src="src" :alt="alt" />
     <span v-else class="avanti-avatar__initials">{{ initials }}</span>
     <span v-if="online" class="avanti-avatar__dot" />

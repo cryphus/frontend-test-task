@@ -7,7 +7,11 @@ defineProps({
   disabled: { type: Boolean, default: false },
 })
 
-defineEmits(['action'])
+const emit = defineEmits(['action'])
+
+function onAction() {
+  emit('action')
+}
 </script>
 
 <template>
@@ -18,7 +22,7 @@ defineEmits(['action'])
       variant="outline"
       size="sm"
       :disabled="disabled"
-      @click="$emit('action')"
+      @click="onAction"
     >
       {{ action }}
     </AvantiButton>

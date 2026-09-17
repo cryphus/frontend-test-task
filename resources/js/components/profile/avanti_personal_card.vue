@@ -14,13 +14,17 @@ defineProps({
   compact: { type: Boolean, default: false },
 })
 
-defineEmits(['edit'])
+const emit = defineEmits(['edit'])
+
+function edit() {
+  emit('edit')
+}
 </script>
 
 <template>
   <AvantiCard class="avanti-personal-card" :class="{ 'avanti-personal-card--compact': compact }">
     <AvantiCardHeader :title="title">
-      <AvantiButton v-if="editable" variant="neutral" @click="$emit('edit')">Modifica nome</AvantiButton>
+      <AvantiButton v-if="editable" variant="neutral" @click="edit">Modifica nome</AvantiButton>
     </AvantiCardHeader>
     <dl class="avanti-personal-card__list">
       <AvantiInfoRow v-for="row in rows" :key="row.label" :label="row.label" :value="row.value" />

@@ -1,13 +1,16 @@
 <script setup>
+import { computed } from 'vue'
 import AvantiIcon from '../ui/avanti_icon.vue'
 import AvantiBadge from '../ui/avanti_badge.vue'
 
-defineProps({
+const props = defineProps({
   href: { type: String, required: true },
   label: { type: String, default: 'Assistenza' },
   count: { type: Number, default: 0 },
   stacked: { type: Boolean, default: false },
 })
+
+const showBadge = computed(() => props.count > 0 && !props.stacked)
 </script>
 
 <template>
@@ -20,7 +23,7 @@ defineProps({
       <AvantiIcon name="chat" size="sm" />
     </span>
     <span class="avanti-support-button__label">{{ label }}</span>
-    <AvantiBadge v-if="count && !stacked" class="avanti-support-button__badge" variant="count">
+    <AvantiBadge v-if="showBadge" class="avanti-support-button__badge" variant="count">
       {{ count }}
     </AvantiBadge>
   </a>

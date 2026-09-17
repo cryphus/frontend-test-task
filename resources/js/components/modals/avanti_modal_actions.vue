@@ -8,14 +8,18 @@ defineProps({
   cancelLabel: { type: String, default: 'Annulla' },
 })
 
-defineEmits(['cancel'])
+const emit = defineEmits(['cancel'])
+
+function cancel() {
+  emit('cancel')
+}
 </script>
 
 <template>
   <div class="avanti-modal-actions">
     <p v-if="error" class="avanti-modal-actions__error" role="alert">{{ error }}</p>
     <div class="avanti-modal-actions__row">
-      <AvantiButton variant="outline" size="lg" block uppercase @click="$emit('cancel')">
+      <AvantiButton variant="outline" size="lg" block uppercase @click="cancel">
         {{ cancelLabel }}
       </AvantiButton>
       <AvantiButton type="submit" size="lg" block uppercase :loading="loading">

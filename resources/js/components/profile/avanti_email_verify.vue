@@ -22,6 +22,10 @@ const sending = ref(false)
 const confirming = ref(false)
 
 const status = computed(() => (props.verified ? 'Verificata' : 'Non verificata'))
+const statusIcon = computed(() => (props.verified ? 'check' : 'help'))
+const badgeVariant = computed(() => (props.verified ? 'success' : 'light'))
+const codeHint = `Inserisci il codice a ${CODE_LENGTH} cifre inviato alla tua email:`
+const hasError = computed(() => Boolean(error.value))
 const codeComplete = computed(() => code.value.length === CODE_LENGTH)
 
 async function run(flag, task) {
@@ -59,13 +63,13 @@ function confirmCode() {
 </script>
 
 <template>
-  <div class="avanti-email-verify" :class="{ 'avanti-email-verify--open': codeSent && !verified }">
+  <div class="avanti-email-verify">
     <div class="avanti-email-verify__head">
       <span class="avanti-email-verify__help">
-        <AvantiIcon :name="verified ? 'check' : 'help'" size="xs" :stroke-width="3" />
+        <AvantiIcon :name="statusIcon" size="xs" :stroke-width="3" />
       </span>
       <span class="avanti-email-verify__title">Verifica email</span>
-      <AvantiBadge :variant="verified ? 'success' : 'light'">{{ status }}</AvantiBadge>
+      <AvantiBadge :variant="badgeVariant">{{ status }}</AvantiBadge>
     </div>
 
     <p v-if="verified" class="avanti-email-verify__text">Il tuo indirizzo email è verificato.</p>
@@ -79,8 +83,8 @@ function confirmCode() {
 
     <form v-else class="avanti-email-verify__form" novalidate @submit.prevent="confirmCode">
       <p class="avanti-email-verify__text">Verifica il tuo indirizzo email per proteggere il tuo account.</p>
-      <p class="avanti-email-verify__prompt">Inserisci il codice a {{ CODE_LENGTH }} cifre inviato alla tua email:</p>
-      <AvantiCodeInput v-model="code" :length="CODE_LENGTH" :invalid="Boolean(error)" />
+      <p class="avanti-email-verify__prompt">{{ codeHint }}</p>
+      <AvantiCodeInput v-model="code" :length="CODE_LENGTH" :invalid="hasError" />
       <div class="avanti-email-verify__actions">
         <AvantiButton
           class="avanti-email-verify__confirm"

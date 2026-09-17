@@ -1,5 +1,5 @@
 <script setup>
-import { ref, useId } from 'vue'
+import { computed, ref, useId } from 'vue'
 import AvantiIconButton from '../ui/avanti_icon_button.vue'
 import { useAvantiToast } from '../../composables/avanti_use_toast.js'
 
@@ -11,6 +11,8 @@ const props = defineProps({
 const labelId = useId()
 const copied = ref(false)
 const toast = useAvantiToast()
+const displayValue = computed(() => props.value || '-')
+const copyLabel = computed(() => (copied.value ? 'IBAN copiato' : 'Copia IBAN'))
 
 async function copy() {
   if (!props.value) {
@@ -27,10 +29,10 @@ async function copy() {
   <div class="avanti-iban-field">
     <span :id="labelId" class="avanti-iban-field__label">{{ label }}</span>
     <div class="avanti-iban-field__box" :aria-labelledby="labelId">
-      <span class="avanti-iban-field__value">{{ value || '-' }}</span>
+      <span class="avanti-iban-field__value">{{ displayValue }}</span>
       <AvantiIconButton
         icon="copy"
-        :label="copied ? 'IBAN copiato' : 'Copia IBAN'"
+        :label="copyLabel"
         size="sm"
         @click="copy"
       />

@@ -1,11 +1,15 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   size: { type: String, default: 'lg', validator: (v) => ['sm', 'md', 'lg'].includes(v) },
 })
+
+const sizeClass = computed(() => `avanti-logo--${props.size}`)
 </script>
 
 <template>
-  <span class="avanti-logo" :class="`avanti-logo--${size}`">
+  <span class="avanti-logo" :class="sizeClass">
     <img class="avanti-logo__mark" src="/images/avanti_logo_mark.svg" alt="" />
     <span class="avanti-logo__text">Avanti</span>
   </span>

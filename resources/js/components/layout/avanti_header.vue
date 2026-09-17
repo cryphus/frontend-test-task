@@ -13,6 +13,9 @@ import { useAvantiProfile } from '../../composables/avanti_use_profile.js'
 const route = useRoute()
 const { state, fullName, initials } = useAvantiProfile()
 
+const avatar = computed(() => state.user?.avatar ?? '')
+const email = computed(() => state.user?.email ?? '')
+
 const breadcrumbs = computed(() => [
   { label: 'Piattaforma', to: { name: 'home' } },
   { label: route.meta.title ?? 'Home' },
@@ -43,15 +46,15 @@ const breadcrumbs = computed(() => [
         />
         <div class="avanti-header__mobile-tools">
           <AvantiNotificationButton :count="state.notifications" />
-          <AvantiUserChip :name="initials" :avatar="state.user?.avatar" :initials="initials" compact />
+          <AvantiUserChip :name="initials" :avatar="avatar" :initials="initials" compact />
         </div>
       </div>
     </div>
     <div class="avanti-header__inner avanti-header__inner--bottom">
       <AvantiUserChip
         :name="fullName"
-        :email="state.user?.email"
-        :avatar="state.user?.avatar"
+        :email="email"
+        :avatar="avatar"
         :initials="initials"
       />
       <AvantiBreadcrumbs :items="breadcrumbs" />

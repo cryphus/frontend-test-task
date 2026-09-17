@@ -1,15 +1,22 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const EMPTY_VALUE = '—'
+
+const props = defineProps({
   label: { type: String, required: true },
   value: { type: [String, Number], default: '' },
   size: { type: String, default: 'md', validator: (v) => ['sm', 'md'].includes(v) },
 })
+
+const sizeClass = computed(() => `avanti-info-row--${props.size}`)
+const displayValue = computed(() => props.value || EMPTY_VALUE)
 </script>
 
 <template>
-  <div class="avanti-info-row" :class="`avanti-info-row--${size}`">
+  <div class="avanti-info-row" :class="sizeClass">
     <dt class="avanti-info-row__label">{{ label }}</dt>
-    <dd class="avanti-info-row__value">{{ value || '—' }}</dd>
+    <dd class="avanti-info-row__value">{{ displayValue }}</dd>
   </div>
 </template>
 

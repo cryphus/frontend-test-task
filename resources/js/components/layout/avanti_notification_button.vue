@@ -1,15 +1,18 @@
 <script setup>
+import { computed } from 'vue'
 import AvantiIcon from '../ui/avanti_icon.vue'
 import AvantiBadge from '../ui/avanti_badge.vue'
 
-defineProps({
+const props = defineProps({
   count: { type: Number, default: 0 },
   href: { type: String, default: '#notifiche' },
 })
+
+const label = computed(() => `Notifiche: ${props.count}`)
 </script>
 
 <template>
-  <a class="avanti-notification-button" :href="href" :aria-label="`Notifiche: ${count}`">
+  <a class="avanti-notification-button" :href="href" :aria-label="label">
     <AvantiIcon name="bell" size="lg" />
     <AvantiBadge v-if="count" class="avanti-notification-button__badge" variant="count">{{ count }}</AvantiBadge>
   </a>

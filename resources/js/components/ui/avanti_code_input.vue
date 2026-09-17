@@ -12,6 +12,10 @@ const props = defineProps({
 const cells = ref([])
 const digits = computed(() => Array.from({ length: props.length }, (_, i) => model.value[i] ?? ''))
 
+function cellLabel(index) {
+  return `Cifra ${index + 1}`
+}
+
 function focusCell(index) {
   const cell = cells.value[Math.max(0, Math.min(index, props.length - 1))]
   cell?.focus()
@@ -66,7 +70,7 @@ function onPaste(event) {
       inputmode="numeric"
       autocomplete="one-time-code"
       maxlength="6"
-      :aria-label="`Cifra ${index + 1}`"
+      :aria-label="cellLabel(index)"
       @input="onInput(index, $event)"
       @keydown="onKeydown(index, $event)"
       @paste="onPaste"

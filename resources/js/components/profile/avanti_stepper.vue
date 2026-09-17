@@ -1,27 +1,38 @@
 <script setup>
+import { computed } from 'vue'
 import AvantiCard from '../ui/avanti_card.vue'
 import AvantiStepMarker from './avanti_step_marker.vue'
 
-defineProps({
+const props = defineProps({
   steps: { type: Array, required: true },
   current: { type: Number, required: true },
   completed: { type: Number, required: true },
 })
+
+const title = computed(() => `Passo ${props.current + 1} di ${props.steps.length}`)
+const counter = computed(() => `${props.completed} / ${props.steps.length} completati`)
+const items = computed(() =>
+  props.steps.map((step) => ({
+    ...step,
+    itemClass: `avanti-stepper__item--${step.status}`,
+    ariaCurrent: step.status === 'current' ? 'step' : undefined,
+  })),
+)
 </script>
 
 <template>
   <AvantiCard class="avanti-stepper" shadow="card" :padded="false">
     <div class="avanti-stepper__head">
-      <span class="avanti-stepper__title">Passo {{ current + 1 }} di {{ steps.length }}</span>
-      <span class="avanti-stepper__count">{{ completed }} / {{ steps.length }} completati</span>
+      <span class="avanti-stepper__title">{{ title }}</span>
+      <span class="avanti-stepper__count">{{ counter }}</span>
     </div>
     <ol class="avanti-stepper__list">
       <li
-        v-for="step in steps"
+        v-for="step in items"
         :key="step.key"
         class="avanti-stepper__item"
-        :class="`avanti-stepper__item--${step.status}`"
-        :aria-current="step.status === 'current' ? 'step' : undefined"
+        :class="step.itemClass"
+        :aria-current="step.ariaCurrent"
       >
         <AvantiStepMarker class="avanti-stepper__marker" :status="step.status" :icon="step.icon" />
         <span class="avanti-stepper__label">{{ step.short }}</span>

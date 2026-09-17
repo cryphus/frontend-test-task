@@ -1,14 +1,20 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   items: { type: Array, required: true },
 })
+
+const crumbs = computed(() =>
+  props.items.map((item, index) => ({ ...item, linked: Boolean(item.to) && index < props.items.length - 1 })),
+)
 </script>
 
 <template>
   <nav class="avanti-breadcrumbs" aria-label="Breadcrumb">
     <ol class="avanti-breadcrumbs__list">
-      <li v-for="(item, index) in items" :key="item.label" class="avanti-breadcrumbs__item">
-        <RouterLink v-if="item.to && index < items.length - 1" :to="item.to" class="avanti-breadcrumbs__link">
+      <li v-for="item in crumbs" :key="item.label" class="avanti-breadcrumbs__item">
+        <RouterLink v-if="item.linked" :to="item.to" class="avanti-breadcrumbs__link">
           {{ item.label }}
         </RouterLink>
         <span v-else aria-current="page" class="avanti-breadcrumbs__current">{{ item.label }}</span>
