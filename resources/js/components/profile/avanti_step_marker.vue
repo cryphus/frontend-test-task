@@ -14,7 +14,7 @@ const iconSize = computed(() => (props.size === 'lg' ? 'lg' : 'sm'))
 
 <template>
   <span class="avanti-step-marker" :class="[`avanti-step-marker--${status}`, `avanti-step-marker--${size}`]">
-    <AvantiIcon :name="iconName" :size="iconSize" :stroke-width="status === 'done' ? 2.5 : 2" />
+    <AvantiIcon :name="iconName" :size="iconSize" :stroke-width="status === 'done' ? 2.5 : undefined" />
   </span>
 </template>
 

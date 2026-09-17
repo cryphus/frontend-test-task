@@ -16,7 +16,9 @@ defineProps({
     :class="`avanti-nav-item--${variant}`"
     active-class="avanti-nav-item--active"
   >
-    <AvantiIcon v-if="icon" :name="icon" size="sm" />
+    <span v-if="icon" class="avanti-nav-item__icon">
+      <AvantiIcon :name="icon" size="sm" :stroke-width="variant === 'tab' ? 2 : 1.25" />
+    </span>
     <span>{{ label }}</span>
   </RouterLink>
 </template>
@@ -37,20 +39,37 @@ defineProps({
   outline-offset: 2px;
 }
 
+.avanti-nav-item__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 .avanti-nav-item--tab {
   flex: 1 1 0;
   min-width: 0;
-  max-width: 210px;
-  height: 39px;
+  height: 38px;
   padding: 10px 12px;
-  background: var(--avanti-surface-alt);
+  border: 1px solid var(--avanti-primary-soft);
+  background: var(--avanti-page);
+  color: var(--avanti-text);
   font-size: 14px;
+  line-height: 17px;
+}
+.avanti-nav-item--tab .avanti-nav-item__icon {
+  width: 18px;
+  height: 18px;
+  color: var(--avanti-muted);
 }
 .avanti-nav-item--tab:hover {
-  background: var(--avanti-border);
+  background: var(--avanti-primary-soft);
 }
 .avanti-nav-item--tab.avanti-nav-item--active {
   background: var(--avanti-primary-soft);
+  color: var(--avanti-primary);
+}
+.avanti-nav-item--tab.avanti-nav-item--active .avanti-nav-item__icon {
   color: var(--avanti-primary);
 }
 
@@ -64,7 +83,6 @@ defineProps({
 .avanti-nav-item--stacked :deep(.avanti-icon) {
   width: 20px;
   height: 20px;
-  stroke-width: 1.5;
 }
 .avanti-nav-item--stacked.avanti-nav-item--active {
   color: var(--avanti-primary);

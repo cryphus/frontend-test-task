@@ -25,6 +25,8 @@ defineProps({
   padding: 0;
   list-style: none;
   font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
 }
 .avanti-breadcrumbs__item {
   display: flex;
@@ -39,7 +41,7 @@ defineProps({
   color: var(--avanti-primary);
 }
 .avanti-breadcrumbs__current {
-  color: var(--avanti-text-strong);
+  color: var(--avanti-text);
   font-weight: 600;
 }
 </style>

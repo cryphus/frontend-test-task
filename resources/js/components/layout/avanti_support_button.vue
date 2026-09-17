@@ -16,7 +16,9 @@ defineProps({
     :class="{ 'avanti-support-button--stacked': stacked }"
     :href="href"
   >
-    <AvantiIcon name="chat" :size="stacked ? 'sm' : 'md'" />
+    <span class="avanti-support-button__icon">
+      <AvantiIcon name="chat" size="sm" />
+    </span>
     <span class="avanti-support-button__label">{{ label }}</span>
     <AvantiBadge v-if="count && !stacked" class="avanti-support-button__badge" variant="count">
       {{ count }}
@@ -32,6 +34,7 @@ defineProps({
   gap: 12px;
   height: 39px;
   padding: 10px 12px;
+  white-space: nowrap;
   border-radius: var(--avanti-radius-sm);
   background: var(--avanti-primary);
   color: #fff;
@@ -44,16 +47,29 @@ defineProps({
   outline: 2px solid var(--avanti-primary);
   outline-offset: 2px;
 }
+.avanti-support-button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+}
 .avanti-support-button__label {
   font-size: 16px;
   font-weight: 600;
+  line-height: 19px;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
 }
 .avanti-support-button__badge {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: -10px;
+  right: -11px;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  padding: 0;
+  font-size: 11px;
+  box-shadow: inset 0 0 0 2px var(--avanti-surface);
 }
 
 .avanti-support-button--stacked {

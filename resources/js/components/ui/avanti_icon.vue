@@ -5,25 +5,31 @@ import { avantiIcons } from '../../data/avanti_icons.js'
 const props = defineProps({
   name: { type: String, required: true },
   size: { type: String, default: 'md', validator: (v) => ['xs', 'sm', 'md', 'lg'].includes(v) },
-  strokeWidth: { type: [Number, String], default: 2 },
+  // Толщина в единицах сетки иконки; по умолчанию — визуально как 2 в сетке 24.
+  strokeWidth: { type: [Number, String], default: null },
 })
 
-const paths = computed(() => avantiIcons[props.name] ?? [])
+const icon = computed(() => {
+  const entry = avantiIcons[props.name] ?? []
+  return Array.isArray(entry) ? { box: 24, paths: entry } : entry
+})
+const viewBox = computed(() => `0 0 ${icon.value.box} ${icon.value.box}`)
+const stroke = computed(() => props.strokeWidth ?? icon.value.stroke ?? (2 * icon.value.box) / 24)
 </script>
 
 <template>
   <svg
     class="avanti-icon"
     :class="`avanti-icon--${size}`"
-    viewBox="0 0 24 24"
+    :viewBox="viewBox"
     fill="none"
     stroke="currentColor"
-    :stroke-width="strokeWidth"
+    :stroke-width="stroke"
     stroke-linecap="round"
     stroke-linejoin="round"
     aria-hidden="true"
   >
-    <path v-for="path in paths" :key="path" :d="path" />
+    <path v-for="path in icon.paths" :key="path" :d="path" />
   </svg>
 </template>
 

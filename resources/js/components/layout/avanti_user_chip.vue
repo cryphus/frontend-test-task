@@ -33,9 +33,10 @@ defineProps({
   min-width: 0;
 }
 .avanti-user-chip__name {
-  color: var(--avanti-text-strong);
+  color: var(--avanti-text);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
+  line-height: 17px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -43,6 +44,7 @@ defineProps({
 .avanti-user-chip__email {
   color: var(--avanti-muted);
   font-size: 12px;
+  line-height: 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

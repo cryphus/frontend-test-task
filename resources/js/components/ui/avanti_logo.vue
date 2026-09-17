@@ -25,9 +25,13 @@ defineProps({
 .avanti-logo--lg {
   gap: 12px;
   font-size: 32px;
+  font-weight: 700;
+  line-height: 39px;
+  letter-spacing: -1.6px;
+  color: #000;
 }
 .avanti-logo--lg .avanti-logo__mark {
-  width: 49px;
+  width: 48px;
 }
 .avanti-logo--md {
   gap: 10px;

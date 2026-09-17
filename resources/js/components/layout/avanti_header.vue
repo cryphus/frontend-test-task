@@ -27,7 +27,13 @@ const breadcrumbs = computed(() => [
           <AvantiLogo class="avanti-header__logo" />
         </RouterLink>
         <nav class="avanti-header__nav" aria-label="Navigazione principale">
-          <AvantiNavItem v-for="item in avantiNavItems" :key="item.label" v-bind="item" />
+          <AvantiNavItem
+            v-for="item in avantiNavItems"
+            :key="item.label"
+            :to="item.to"
+            :label="item.label"
+            :icon="item.icon"
+          />
         </nav>
         <AvantiSupportButton
           class="avanti-header__support"
@@ -75,7 +81,9 @@ const breadcrumbs = computed(() => [
   min-height: 60px;
 }
 .avanti-header__brand {
+  display: flex;
   flex-shrink: 0;
+  min-width: 152px;
 }
 .avanti-header__nav {
   display: flex;
@@ -108,11 +116,16 @@ const breadcrumbs = computed(() => [
   }
   .avanti-header__logo {
     gap: 6px;
+    color: var(--avanti-text);
     font-size: 22px;
-    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: -1px;
   }
   .avanti-header__logo :deep(.avanti-logo__mark) {
     width: 34px;
+  }
+  .avanti-header__brand {
+    min-width: 0;
   }
   .avanti-header__nav,
   .avanti-header__support,
