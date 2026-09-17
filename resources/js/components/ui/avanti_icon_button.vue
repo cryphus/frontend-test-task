@@ -1,28 +1,41 @@
 <script setup>
+import { computed } from 'vue'
 import AvantiIcon from './avanti_icon.vue'
 
-defineProps({
+const props = defineProps({
   icon: { type: String, required: true },
   label: { type: String, required: true },
   variant: {
     type: String,
     default: 'plain',
-    validator: (v) => ['plain', 'outline', 'filled', 'muted'].includes(v),
+    validator: (v) => ['plain', 'outline', 'filled', 'muted', 'ghost', 'inverse'].includes(v),
   },
-  size: { type: String, default: 'md', validator: (v) => ['sm', 'md', 'lg'].includes(v) },
+  size: { type: String, default: 'md', validator: (v) => ['xs', 'sm', 'md', 'lg'].includes(v) },
   iconSize: { type: String, default: 'sm' },
+  strokeWidth: { type: [Number, String], default: null },
+  disabled: { type: Boolean, default: false },
 })
+
+const emit = defineEmits(['click'])
+
+const classes = computed(() => [`avanti-icon-button--${props.variant}`, `avanti-icon-button--${props.size}`])
+
+function onClick(event) {
+  emit('click', event)
+}
 </script>
 
 <template>
   <button
     class="avanti-icon-button"
-    :class="[`avanti-icon-button--${variant}`, `avanti-icon-button--${size}`]"
+    :class="classes"
     type="button"
     :aria-label="label"
     :title="label"
+    :disabled="disabled"
+    @click="onClick"
   >
-    <AvantiIcon :name="icon" :size="iconSize" />
+    <AvantiIcon :name="icon" :size="iconSize" :stroke-width="strokeWidth" />
   </button>
 </template>
 
@@ -38,11 +51,22 @@ defineProps({
   background: transparent;
   color: var(--avanti-primary);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.2s ease;
 }
 .avanti-icon-button:focus-visible {
   outline: 2px solid var(--avanti-primary);
   outline-offset: 2px;
+}
+.avanti-icon-button:disabled {
+  cursor: default;
+}
+
+.avanti-icon-button--xs {
+  width: 20px;
+  height: 20px;
 }
 .avanti-icon-button--sm {
   width: 24px;
@@ -56,27 +80,41 @@ defineProps({
   width: 40px;
   height: 40px;
 }
-.avanti-icon-button--plain:hover {
+
+.avanti-icon-button--plain:hover:not(:disabled) {
   background: var(--avanti-primary-soft);
 }
 .avanti-icon-button--outline {
   border-color: var(--avanti-border);
   border-radius: var(--avanti-radius-sm);
-  background: var(--avanti-surface-alt);
+  background: var(--avanti-page);
   color: var(--avanti-text-strong);
 }
-.avanti-icon-button--outline:hover {
+.avanti-icon-button--outline:hover:not(:disabled) {
   background: var(--avanti-border);
 }
 .avanti-icon-button--filled {
   background: var(--avanti-primary);
   color: #fff;
 }
-.avanti-icon-button--filled:hover {
+.avanti-icon-button--filled:hover:not(:disabled) {
   background: var(--avanti-primary-dark);
 }
 .avanti-icon-button--muted {
   background: var(--avanti-surface-alt);
   color: var(--avanti-muted);
+}
+.avanti-icon-button--ghost {
+  border-radius: var(--avanti-radius-sm);
+  color: var(--avanti-border-strong);
+}
+.avanti-icon-button--ghost:hover:not(:disabled) {
+  color: var(--avanti-muted);
+}
+.avanti-icon-button--inverse {
+  color: var(--avanti-muted-light);
+}
+.avanti-icon-button--inverse:hover:not(:disabled) {
+  color: #fff;
 }
 </style>

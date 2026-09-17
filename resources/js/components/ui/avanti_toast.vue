@@ -1,5 +1,6 @@
 <script setup>
 import AvantiIcon from './avanti_icon.vue'
+import AvantiIconButton from './avanti_icon_button.vue'
 import { useAvantiToast } from '../../composables/avanti_use_toast.js'
 
 const { message, hide } = useAvantiToast()
@@ -12,9 +13,7 @@ const { message, hide } = useAvantiToast()
         <AvantiIcon name="check" size="sm" :stroke-width="3" />
       </span>
       <span class="avanti-toast__text">{{ message }}</span>
-      <button class="avanti-toast__close" type="button" aria-label="Chiudi" @click="hide">
-        <AvantiIcon name="close" size="sm" />
-      </button>
+      <AvantiIconButton icon="close" label="Chiudi" variant="inverse" size="sm" @click="hide" />
     </div>
   </Transition>
 </template>
@@ -28,6 +27,7 @@ const { message, hide } = useAvantiToast()
   display: flex;
   align-items: center;
   gap: 12px;
+  width: max-content;
   max-width: calc(100% - 32px);
   padding: 12px 16px;
   border-radius: var(--avanti-radius-md);
@@ -42,14 +42,6 @@ const { message, hide } = useAvantiToast()
   padding: 4px;
   border-radius: 50%;
   background: var(--avanti-primary);
-}
-.avanti-toast__close {
-  display: flex;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--avanti-muted-light);
-  cursor: pointer;
 }
 .avanti-toast-enter-active,
 .avanti-toast-leave-active {

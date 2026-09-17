@@ -1,8 +1,9 @@
 <script setup>
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import AvantiIcon from './avanti_icon.vue'
 
-defineProps({
+const props = defineProps({
   variant: {
     type: String,
     default: 'primary',
@@ -17,21 +18,35 @@ defineProps({
   disabled: { type: Boolean, default: false },
   to: { type: [String, Object], default: null },
 })
+
+const emit = defineEmits(['click'])
+
+const isLink = computed(() => Boolean(props.to))
+const tag = computed(() => (isLink.value ? RouterLink : 'button'))
+
+const classes = computed(() => [
+  `avanti-button--${props.variant}`,
+  `avanti-button--${props.size}`,
+  {
+    'avanti-button--block': props.block,
+    'avanti-button--upper': props.uppercase,
+    'avanti-button--loading': props.loading,
+  },
+])
+
+const attrs = computed(() =>
+  isLink.value
+    ? { to: props.to }
+    : { type: props.type, disabled: props.disabled || props.loading },
+)
+
+function onClick(event) {
+  emit('click', event)
+}
 </script>
 
 <template>
-  <component
-    :is="to ? RouterLink : 'button'"
-    class="avanti-button"
-    :class="[
-      `avanti-button--${variant}`,
-      `avanti-button--${size}`,
-      { 'avanti-button--block': block, 'avanti-button--upper': uppercase, 'avanti-button--loading': loading },
-    ]"
-    :to="to ?? undefined"
-    :type="to ? undefined : type"
-    :disabled="to ? undefined : disabled || loading"
-  >
+  <component :is="tag" class="avanti-button" :class="classes" v-bind="attrs" @click="onClick">
     <AvantiIcon v-if="icon" :name="icon" size="md" />
     <span class="avanti-button__label"><slot /></span>
     <slot name="append" />

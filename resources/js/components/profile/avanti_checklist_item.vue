@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import AvantiIcon from '../ui/avanti_icon.vue'
+import AvantiIconButton from '../ui/avanti_icon_button.vue'
 import AvantiStepMarker from './avanti_step_marker.vue'
 
 const props = defineProps({
@@ -9,7 +10,7 @@ const props = defineProps({
   status: { type: String, required: true, validator: (v) => ['done', 'current', 'pending'].includes(v) },
 })
 
-defineEmits(['open'])
+const emit = defineEmits(['open'])
 
 const subtitles = {
   done: 'Completato',
@@ -18,29 +19,37 @@ const subtitles = {
 }
 
 const subtitle = computed(() => subtitles[props.status])
-const markerStatus = computed(() => (props.status === 'done' ? 'done-icon' : props.status))
+const isDone = computed(() => props.status === 'done')
+const isPending = computed(() => props.status === 'pending')
+const goVariant = computed(() => (isPending.value ? 'muted' : 'filled'))
+const goLabel = computed(() => `Vai a: ${props.title}`)
+const itemClass = computed(() => `avanti-checklist-item--${props.status}`)
+const iconClass = computed(() => `avanti-checklist-item__icon--${props.status}`)
+
+function open() {
+  emit('open')
+}
 </script>
 
 <template>
-  <li class="avanti-checklist-item" :class="`avanti-checklist-item--${status}`">
-    <span class="avanti-checklist-item__icon" :class="`avanti-checklist-item__icon--${markerStatus}`">
+  <li class="avanti-checklist-item" :class="itemClass">
+    <span class="avanti-checklist-item__icon" :class="iconClass">
       <AvantiIcon :name="icon" size="md" />
     </span>
     <div class="avanti-checklist-item__text">
       <span class="avanti-checklist-item__title">{{ title }}</span>
       <span class="avanti-checklist-item__subtitle">{{ subtitle }}</span>
     </div>
-    <AvantiStepMarker v-if="status === 'done'" status="done" size="sm" />
-    <button
+    <AvantiStepMarker v-if="isDone" status="done" size="sm" />
+    <AvantiIconButton
       v-else
       class="avanti-checklist-item__go"
-      type="button"
-      :disabled="status === 'pending'"
-      :aria-label="`Vai a: ${title}`"
-      @click="$emit('open')"
-    >
-      <AvantiIcon name="arrowRight" size="sm" />
-    </button>
+      icon="arrowRight"
+      :label="goLabel"
+      :variant="goVariant"
+      :disabled="isPending"
+      @click="open"
+    />
   </li>
 </template>
 
@@ -64,7 +73,7 @@ const markerStatus = computed(() => (props.status === 'done' ? 'done-icon' : pro
   height: 44px;
   border-radius: 50%;
 }
-.avanti-checklist-item__icon--done-icon {
+.avanti-checklist-item__icon--done {
   background: var(--avanti-primary);
   color: #fff;
 }
@@ -106,28 +115,6 @@ const markerStatus = computed(() => (props.status === 'done' ? 'done-icon' : pro
 .avanti-checklist-item--pending .avanti-checklist-item__subtitle {
   color: var(--avanti-muted-light);
 }
-.avanti-checklist-item__go {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: var(--avanti-primary);
-  color: #fff;
-  cursor: pointer;
-}
-.avanti-checklist-item__go:hover:not(:disabled) {
-  background: var(--avanti-primary-dark);
-}
-.avanti-checklist-item__go:disabled {
-  background: var(--avanti-surface-alt);
-  color: var(--avanti-muted);
-  cursor: default;
-}
 
 @media (max-width: 767px) {
   .avanti-checklist-item {
@@ -142,7 +129,7 @@ const markerStatus = computed(() => (props.status === 'done' ? 'done-icon' : pro
     width: 18px;
     height: 18px;
   }
-  .avanti-checklist-item__go {
+  .avanti-checklist-item .avanti-checklist-item__go {
     width: 28px;
     height: 28px;
   }

@@ -2,7 +2,7 @@
 import { computed, ref, useId } from 'vue'
 import AvantiCard from '../ui/avanti_card.vue'
 import AvantiBadge from '../ui/avanti_badge.vue'
-import AvantiIcon from '../ui/avanti_icon.vue'
+import AvantiIconButton from '../ui/avanti_icon_button.vue'
 import AvantiChecklistItem from './avanti_checklist_item.vue'
 import AvantiProgressSegments from './avanti_progress_segments.vue'
 
@@ -11,14 +11,21 @@ const props = defineProps({
   completed: { type: Number, required: true },
 })
 
-defineEmits(['open-step'])
+const emit = defineEmits(['open-step'])
 
 const expanded = ref(true)
+const toggleLabel = computed(() => (expanded.value ? 'Comprimi' : 'Espandi'))
+const toggleClass = computed(() => ({ 'avanti-checklist-card__toggle--collapsed': !expanded.value }))
+const counter = computed(() => `${props.completed} / ${props.steps.length} completati`)
 const hasCurrent = computed(() => props.steps.some((step) => step.status === 'current'))
 const bodyId = useId()
 
 function toggle() {
   expanded.value = !expanded.value
+}
+
+function openStep(step) {
+  emit('open-step', step)
 }
 </script>
 
@@ -30,18 +37,17 @@ function toggle() {
         <h2 class="avanti-checklist-card__title">Per il prelievo dei fondi, completa tutti gli step</h2>
       </div>
       <div class="avanti-checklist-card__tools">
-        <AvantiBadge>{{ completed }} / {{ steps.length }} completati</AvantiBadge>
-        <button
+        <AvantiBadge>{{ counter }}</AvantiBadge>
+        <AvantiIconButton
           class="avanti-checklist-card__toggle"
-          :class="{ 'avanti-checklist-card__toggle--collapsed': !expanded }"
-          type="button"
+          :class="toggleClass"
+          icon="chevronUp"
+          :label="toggleLabel"
+          variant="outline"
           :aria-expanded="expanded"
           :aria-controls="bodyId"
-          :aria-label="expanded ? 'Comprimi' : 'Espandi'"
           @click="toggle"
-        >
-          <AvantiIcon name="chevronUp" size="sm" />
-        </button>
+        />
       </div>
     </div>
     <div v-show="expanded" :id="bodyId">
@@ -52,7 +58,7 @@ function toggle() {
           :title="step.title"
           :icon="step.icon"
           :status="step.status"
-          @open="$emit('open-step', step)"
+          @open="openStep(step)"
         />
       </ul>
       <AvantiProgressSegments
@@ -97,20 +103,6 @@ function toggle() {
   align-items: center;
   gap: 10px;
 }
-.avanti-checklist-card__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 1px solid var(--avanti-border);
-  border-radius: var(--avanti-radius-sm);
-  background: var(--avanti-page);
-  color: var(--avanti-text-strong);
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
 .avanti-checklist-card__toggle--collapsed {
   transform: rotate(180deg);
 }
@@ -139,7 +131,7 @@ function toggle() {
   .avanti-checklist-card__tools :deep(.avanti-badge) {
     display: none;
   }
-  .avanti-checklist-card__toggle {
+  .avanti-checklist-card__tools .avanti-checklist-card__toggle {
     width: 20px;
     height: 20px;
     margin-top: 6px;

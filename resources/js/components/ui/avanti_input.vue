@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, useId } from 'vue'
 import AvantiIcon from './avanti_icon.vue'
+import AvantiIconButton from './avanti_icon_button.vue'
 
 const model = defineModel({ type: String, default: '' })
 
@@ -20,6 +21,10 @@ const revealed = ref(false)
 const isPassword = computed(() => props.type === 'password')
 const inputType = computed(() => (isPassword.value && revealed.value ? 'text' : props.type))
 const message = computed(() => props.error || props.hint)
+const describedBy = computed(() => (message.value ? hintId : undefined))
+const revealIcon = computed(() => (revealed.value ? 'eyeOff' : 'eye'))
+const revealLabel = computed(() => (revealed.value ? 'Nascondi password' : 'Mostra password'))
+const invalid = computed(() => Boolean(props.error))
 
 function toggleReveal() {
   revealed.value = !revealed.value
@@ -27,7 +32,7 @@ function toggleReveal() {
 </script>
 
 <template>
-  <div class="avanti-input" :class="{ 'avanti-input--invalid': error }">
+  <div class="avanti-input" :class="{ 'avanti-input--invalid': invalid }">
     <label class="avanti-input__label" :for="inputId">{{ label }}</label>
     <div class="avanti-input__control">
       <input
@@ -37,18 +42,19 @@ function toggleReveal() {
         :type="inputType"
         :autocomplete="autocomplete"
         :placeholder="placeholder"
-        :aria-invalid="Boolean(error)"
-        :aria-describedby="message ? hintId : undefined"
+        :aria-invalid="invalid"
+        :aria-describedby="describedBy"
       />
-      <button
+      <AvantiIconButton
         v-if="isPassword"
         class="avanti-input__reveal"
-        type="button"
-        :aria-label="revealed ? 'Nascondi password' : 'Mostra password'"
+        :icon="revealIcon"
+        :label="revealLabel"
+        variant="ghost"
+        icon-size="lg"
+        :stroke-width="1.5"
         @click="toggleReveal"
-      >
-        <AvantiIcon :name="revealed ? 'eyeOff' : 'eye'" size="lg" :stroke-width="1.5" />
-      </button>
+      />
     </div>
     <p v-if="message" :id="hintId" class="avanti-input__hint">
       <AvantiIcon name="info" size="sm" :stroke-width="1.5" />
@@ -91,17 +97,8 @@ function toggleReveal() {
 .avanti-input__reveal {
   position: absolute;
   top: 50%;
-  right: 14px;
-  display: flex;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--avanti-border-strong);
-  cursor: pointer;
+  right: 10px;
   transform: translateY(-50%);
-}
-.avanti-input__reveal:hover {
-  color: var(--avanti-muted);
 }
 .avanti-input__hint {
   display: flex;
