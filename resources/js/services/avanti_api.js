@@ -1,7 +1,6 @@
 import { avantiMockProfile } from '../data/avanti_mock_profile.js'
 
-// В Laravel-сборке ходим в реальные роуты (routes/web.php, middleware web + auth).
-// В самостоятельной сборке (Vercel) отвечает mock, чтобы макет был живым.
+// Mock включается при сборке без Laravel (__AVANTI_STANDALONE__) или через VITE_AVANTI_MOCK.
 const useMock = import.meta.env.VITE_AVANTI_MOCK
   ? import.meta.env.VITE_AVANTI_MOCK === 'true'
   : __AVANTI_STANDALONE__
@@ -42,7 +41,6 @@ async function request(method, path, body) {
   return data
 }
 
-// ---- mock ----
 const mockState = structuredClone(avantiMockProfile)
 const MOCK_CODE_LENGTH = 6
 const wait = (ms = 350) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -90,7 +88,6 @@ const mock = {
   },
 }
 
-// ---- real ----
 const real = {
   getProfile: () => request('GET', '/profile'),
   updateName: (payload) => request('PUT', '/profile/name', payload),

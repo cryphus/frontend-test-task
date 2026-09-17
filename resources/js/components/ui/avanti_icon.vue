@@ -5,7 +5,7 @@ import { avantiIcons } from '../../data/avanti_icons.js'
 const props = defineProps({
   name: { type: String, required: true },
   size: { type: String, default: 'md', validator: (v) => ['xs', 'sm', 'md', 'lg'].includes(v) },
-  // Толщина в единицах сетки иконки; по умолчанию — визуально как 2 в сетке 24.
+  // В единицах viewBox. null: icon.stroke либо 2 * box / 24.
   strokeWidth: { type: [Number, String], default: null },
 })
 
@@ -14,13 +14,14 @@ const icon = computed(() => {
   return Array.isArray(entry) ? { box: 24, paths: entry } : entry
 })
 const viewBox = computed(() => `0 0 ${icon.value.box} ${icon.value.box}`)
+const sizeClass = computed(() => `avanti-icon--${props.size}`)
 const stroke = computed(() => props.strokeWidth ?? icon.value.stroke ?? (2 * icon.value.box) / 24)
 </script>
 
 <template>
   <svg
     class="avanti-icon"
-    :class="`avanti-icon--${size}`"
+    :class="sizeClass"
     :viewBox="viewBox"
     fill="none"
     stroke="currentColor"

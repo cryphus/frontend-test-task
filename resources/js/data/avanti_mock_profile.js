@@ -1,4 +1,4 @@
-// Демо-данные для самостоятельной сборки (Vercel). В Laravel приходят из GET /api/profile.
+// Mock-ответ GET /api/profile для сборки без Laravel.
 export const avantiMockProfile = {
   user: {
     firstName: 'Marco',

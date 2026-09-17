@@ -1,7 +1,7 @@
 import { computed, reactive, readonly } from 'vue'
 import { avantiApi } from '../services/avanti_api.js'
 
-// Общее состояние кабинета: один экземпляр на приложение.
+// Состояние на уровне модуля: общее для всех вызовов useAvantiProfile().
 const state = reactive({
   loading: false,
   loaded: false,

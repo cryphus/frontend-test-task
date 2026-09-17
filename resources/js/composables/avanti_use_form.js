@@ -1,6 +1,9 @@
 import { reactive, ref } from 'vue'
 
-// Общая логика формы модалки: отправка, ошибки валидации Laravel (422), флаг загрузки.
+/**
+ * Состояние формы: поля, ошибки по полям, общая ошибка, флаг отправки.
+ * Ошибки 422 от Laravel раскладываются по ключам `errors`.
+ */
 export function useAvantiForm(initial) {
   const fields = reactive({ ...initial })
   const errors = reactive({})

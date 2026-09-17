@@ -4,8 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import laravel from 'laravel-vite-plugin'
 
-// Если рядом лежит artisan — собираемся как часть Laravel (public/build + @vite в blade).
-// Иначе — самостоятельное SPA (Vercel, локальный просмотр) с mock-данными.
+// При наличии artisan сборка идёт через laravel-vite-plugin, иначе — standalone SPA с mock API.
 const isLaravel = existsSync(fileURLToPath(new URL('./artisan', import.meta.url)))
 
 const vueOptions = {

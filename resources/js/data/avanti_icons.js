@@ -1,5 +1,4 @@
-// Контуры иконок (stroke). Массив — сетка 24×24; { box, paths } — своя сетка (иконки из Figma 16×16).
-// Рисуются компонентом avanti_icon.vue.
+// Массив путей — viewBox 24×24; { box, stroke?, paths } — viewBox box×box (иконки из Figma).
 export const avantiIcons = {
   home: {
     box: 16,

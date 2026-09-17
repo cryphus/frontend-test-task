@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 
 /**
- * Контракт API, который ждёт фронт (resources/js/services/avanti_api.js).
- * Поля пользователя (first_name, last_name, approved_amount, document_*, iban,
- * email_change_allowed) — пример; подставьте свои колонки/связи.
+ * API профиля для resources/js/services/avanti_api.js.
+ * Колонки users (first_name, last_name, approved_amount, document_*, iban, email_change_allowed)
+ * заданы как пример схемы.
  */
 class ProfileController extends Controller
 {
@@ -122,7 +122,7 @@ class ProfileController extends Controller
         ];
     }
 
-    /** status: done | current | pending; icon: chart | shield | user | upload | pen */
+    /** @return array<int, array{key: string, short: string, title: string, icon: string, status: string}> */
     private function steps($user): array
     {
         return [
