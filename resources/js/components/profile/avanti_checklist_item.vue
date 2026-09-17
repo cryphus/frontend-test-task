@@ -132,11 +132,19 @@ const markerStatus = computed(() => (props.status === 'done' ? 'done-icon' : pro
 @media (max-width: 767px) {
   .avanti-checklist-item {
     gap: 12px;
-    padding: 14px 16px;
+    padding: 16px;
   }
   .avanti-checklist-item__icon {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
+  }
+  .avanti-checklist-item__icon :deep(.avanti-icon) {
+    width: 18px;
+    height: 18px;
+  }
+  .avanti-checklist-item__go {
+    width: 28px;
+    height: 28px;
   }
 }
 </style>

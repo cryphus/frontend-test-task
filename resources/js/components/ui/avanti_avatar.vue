@@ -5,11 +5,12 @@ defineProps({
   initials: { type: String, default: '' },
   size: { type: String, default: 'md', validator: (v) => ['sm', 'md', 'lg'].includes(v) },
   online: { type: Boolean, default: false },
+  ringed: { type: Boolean, default: false },
 })
 </script>
 
 <template>
-  <span class="avanti-avatar" :class="`avanti-avatar--${size}`">
+  <span class="avanti-avatar" :class="[`avanti-avatar--${size}`, { 'avanti-avatar--ringed': ringed }]">
     <img v-if="src" class="avanti-avatar__image" :src="src" :alt="alt" />
     <span v-else class="avanti-avatar__initials">{{ initials }}</span>
     <span v-if="online" class="avanti-avatar__dot" />
@@ -48,6 +49,10 @@ defineProps({
 .avanti-avatar--lg {
   width: 60px;
   height: 60px;
+}
+.avanti-avatar--ringed .avanti-avatar__image,
+.avanti-avatar--ringed .avanti-avatar__initials {
+  border: 1.5px solid var(--avanti-primary);
 }
 .avanti-avatar__dot {
   position: absolute;

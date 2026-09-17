@@ -5,7 +5,7 @@ defineProps({
   to: { type: [String, Object], required: true },
   label: { type: String, required: true },
   icon: { type: String, default: '' },
-  variant: { type: String, default: 'tab', validator: (v) => ['tab', 'pill'].includes(v) },
+  variant: { type: String, default: 'tab', validator: (v) => ['tab', 'stacked'].includes(v) },
 })
 </script>
 
@@ -54,15 +54,21 @@ defineProps({
   color: var(--avanti-primary);
 }
 
-.avanti-nav-item--pill {
-  padding: 5px 10px;
-  border: 1px solid var(--avanti-border);
-  background: var(--avanti-surface);
-  font-size: 13px;
+.avanti-nav-item--stacked {
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 2px;
+  color: var(--avanti-text);
+  font-size: 14px;
 }
-.avanti-nav-item--pill.avanti-nav-item--active {
-  border-color: var(--avanti-primary-soft);
-  background: var(--avanti-primary-soft);
+.avanti-nav-item--stacked :deep(.avanti-icon) {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+}
+.avanti-nav-item--stacked.avanti-nav-item--active {
   color: var(--avanti-primary);
+  font-weight: 600;
 }
+
 </style>

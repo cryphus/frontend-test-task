@@ -46,15 +46,11 @@ defineEmits(['action'])
   .avanti-security-row {
     flex-direction: column;
     align-items: stretch;
-    gap: 8px;
-  }
-  .avanti-security-row__text {
-    font-size: 14px;
+    gap: 10px;
   }
   .avanti-security-row__button {
     width: 100%;
-    min-height: 32px;
-    padding: 6px 16px;
+    min-height: 40px;
   }
 }
 </style>

@@ -65,7 +65,7 @@ resources/js
 ├── pages/                          # avanti_profile_page, avanti_placeholder_page
 └── components
     ├── ui/        # button, icon, icon_button, input, code_input, modal, card, card_header, badge, avatar, logo, info_row, toast, page_state
-    ├── layout/    # layout, header, nav_item, support_button, breadcrumbs, user_chip
+    ├── layout/    # layout, header, bottom_nav, nav_item, support_button, notification_button, breadcrumbs, user_chip
     ├── profile/   # stepper, step_marker, personal_card, iban_field, security_card, security_row, email_verify, checklist_card, checklist_item, progress_segments, chat_popup
     └── modals/    # name_modal, email_modal, password_modal, modal_actions
 ```

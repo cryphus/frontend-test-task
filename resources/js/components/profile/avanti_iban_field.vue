@@ -69,7 +69,7 @@ async function copy() {
 
 @media (max-width: 767px) {
   .avanti-iban-field__label {
-    font-size: 14px;
+    font-size: 13px;
   }
   .avanti-iban-field__box {
     min-height: 36px;

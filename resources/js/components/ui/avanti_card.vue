@@ -37,7 +37,7 @@ defineProps({
 
 @media (max-width: 767px) {
   .avanti-card--padded {
-    padding: 20px 16px;
+    padding: 16px;
   }
 }
 </style>

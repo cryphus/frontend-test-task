@@ -60,4 +60,10 @@ const { message, hide } = useAvantiToast()
   opacity: 0;
   transform: translate(-50%, 12px);
 }
+
+@media (max-width: 767px) {
+  .avanti-toast {
+    bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+}
 </style>

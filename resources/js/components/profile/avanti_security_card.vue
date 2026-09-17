@@ -49,6 +49,9 @@ defineEmits(['change-password', 'change-email', 'verified'])
 }
 
 @media (max-width: 767px) {
+  .avanti-security-card__header {
+    padding-bottom: 16px;
+  }
   .avanti-security-card__verify {
     padding-top: 16px;
   }

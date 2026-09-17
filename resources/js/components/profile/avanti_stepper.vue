@@ -100,16 +100,20 @@ defineProps({
     font-size: 13px;
   }
   .avanti-stepper__marker {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
+  }
+  .avanti-stepper__marker :deep(.avanti-icon) {
+    width: 14px;
+    height: 14px;
   }
   .avanti-stepper__item {
     gap: 4px;
   }
   .avanti-stepper__item + .avanti-stepper__item::before {
-    top: 13px;
-    right: calc(50% + 18px);
-    width: calc(100% - 36px);
+    top: 11px;
+    right: calc(50% + 16px);
+    width: calc(100% - 32px);
   }
   .avanti-stepper__label {
     font-size: 10px;

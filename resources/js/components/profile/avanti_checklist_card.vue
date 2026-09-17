@@ -1,12 +1,12 @@
 <script setup>
-import { ref, useId } from 'vue'
+import { computed, ref, useId } from 'vue'
 import AvantiCard from '../ui/avanti_card.vue'
 import AvantiBadge from '../ui/avanti_badge.vue'
 import AvantiIcon from '../ui/avanti_icon.vue'
 import AvantiChecklistItem from './avanti_checklist_item.vue'
 import AvantiProgressSegments from './avanti_progress_segments.vue'
 
-defineProps({
+const props = defineProps({
   steps: { type: Array, required: true },
   completed: { type: Number, required: true },
 })
@@ -14,6 +14,7 @@ defineProps({
 defineEmits(['open-step'])
 
 const expanded = ref(true)
+const hasCurrent = computed(() => props.steps.some((step) => step.status === 'current'))
 const bodyId = useId()
 
 function toggle() {
@@ -58,6 +59,7 @@ function toggle() {
         class="avanti-checklist-card__progress"
         :total="steps.length"
         :filled="completed"
+        :partial="hasCurrent"
       />
     </div>
   </AvantiCard>
@@ -124,10 +126,9 @@ function toggle() {
 
 @media (max-width: 767px) {
   .avanti-checklist-card__head {
-    flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
     gap: 12px;
-    padding: 20px 16px 16px;
+    padding: 16px;
   }
   .avanti-checklist-card__heading {
     max-width: none;
@@ -135,8 +136,13 @@ function toggle() {
   .avanti-checklist-card__title {
     font-size: 13px;
   }
-  .avanti-checklist-card__tools {
-    justify-content: space-between;
+  .avanti-checklist-card__tools :deep(.avanti-badge) {
+    display: none;
+  }
+  .avanti-checklist-card__toggle {
+    width: 20px;
+    height: 20px;
+    margin-top: 6px;
   }
   .avanti-checklist-card__progress {
     padding: 16px;

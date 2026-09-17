@@ -3,6 +3,7 @@ defineProps({
   total: { type: Number, required: true },
   filled: { type: Number, required: true },
   label: { type: String, default: 'Avanzamento' },
+  partial: { type: Boolean, default: false },
 })
 </script>
 
@@ -19,7 +20,10 @@ defineProps({
       v-for="index in total"
       :key="index"
       class="avanti-progress-segments__item"
-      :class="{ 'avanti-progress-segments__item--filled': index <= filled }"
+      :class="{
+        'avanti-progress-segments__item--filled': index <= filled,
+        'avanti-progress-segments__item--partial': partial && index === filled + 1,
+      }"
     />
   </div>
 </template>
@@ -38,5 +42,11 @@ defineProps({
 }
 .avanti-progress-segments__item--filled {
   background: var(--avanti-primary);
+}
+
+@media (max-width: 767px) {
+  .avanti-progress-segments__item--partial {
+    background: linear-gradient(90deg, var(--avanti-primary), var(--avanti-border));
+  }
 }
 </style>

@@ -187,6 +187,10 @@ function confirmCode() {
 }
 
 @media (max-width: 767px) {
+  .avanti-email-verify {
+    gap: 12px;
+    padding: 14px;
+  }
   .avanti-email-verify__head {
     justify-content: space-between;
   }
@@ -198,12 +202,8 @@ function confirmCode() {
     align-items: stretch;
     gap: 12px;
   }
-  .avanti-email-verify__text {
-    font-size: 14px;
-  }
   .avanti-email-verify__send {
-    min-height: 36px;
-    font-size: 14px;
+    width: 100%;
   }
   .avanti-email-verify__prompt {
     margin-top: 6px;

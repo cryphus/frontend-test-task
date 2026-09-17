@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import AvantiHeader from './avanti_header.vue'
+import AvantiBottomNav from './avanti_bottom_nav.vue'
 import AvantiToast from '../ui/avanti_toast.vue'
 import { useAvantiProfile } from '../../composables/avanti_use_profile.js'
 
@@ -15,6 +16,7 @@ onMounted(load)
     <main class="avanti-layout__main">
       <slot />
     </main>
+    <AvantiBottomNav />
     <AvantiToast />
   </div>
 </template>
@@ -33,7 +35,8 @@ onMounted(load)
 
 @media (max-width: 767px) {
   .avanti-layout__main {
-    padding-bottom: 32px;
+    padding-top: 16px;
+    padding-bottom: calc(82px + env(safe-area-inset-bottom));
   }
 }
 </style>

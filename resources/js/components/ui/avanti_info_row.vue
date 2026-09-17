@@ -35,10 +35,7 @@ defineProps({
 
 @media (max-width: 767px) {
   .avanti-info-row__label {
-    font-size: 14px;
-  }
-  .avanti-info-row__value {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 </style>

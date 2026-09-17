@@ -6,15 +6,19 @@ defineProps({
   href: { type: String, required: true },
   label: { type: String, default: 'Assistenza' },
   count: { type: Number, default: 0 },
-  compact: { type: Boolean, default: false },
+  stacked: { type: Boolean, default: false },
 })
 </script>
 
 <template>
-  <a class="avanti-support-button" :class="{ 'avanti-support-button--compact': compact }" :href="href">
-    <AvantiIcon name="chat" :size="compact ? 'sm' : 'md'" />
+  <a
+    class="avanti-support-button"
+    :class="{ 'avanti-support-button--stacked': stacked }"
+    :href="href"
+  >
+    <AvantiIcon name="chat" :size="stacked ? 'sm' : 'md'" />
     <span class="avanti-support-button__label">{{ label }}</span>
-    <AvantiBadge v-if="count && !compact" class="avanti-support-button__badge" variant="count">
+    <AvantiBadge v-if="count && !stacked" class="avanti-support-button__badge" variant="count">
       {{ count }}
     </AvantiBadge>
   </a>
@@ -52,12 +56,17 @@ defineProps({
   right: -8px;
 }
 
-.avanti-support-button--compact {
-  gap: 8px;
-  height: 32px;
-  padding: 6px 12px;
+.avanti-support-button--stacked {
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  width: 108px;
+  height: 43px;
+  padding: 4px 8px;
 }
-.avanti-support-button--compact .avanti-support-button__label {
+.avanti-support-button--stacked .avanti-support-button__label {
   font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
 }
 </style>

@@ -48,9 +48,9 @@ defineEmits(['edit'])
 
 @media (max-width: 767px) {
   .avanti-personal-card :deep(.avanti-button) {
-    min-height: 32px;
-    padding: 6px 12px;
-    font-size: 13px;
+    min-height: 31px;
+    padding: 7px 12px;
+    font-size: 12px;
   }
   .avanti-personal-card__list {
     gap: 12px;
