@@ -1,0 +1,45 @@
+<script setup>
+defineProps({
+  items: { type: Array, required: true },
+})
+</script>
+
+<template>
+  <nav class="avanti-breadcrumbs" aria-label="Breadcrumb">
+    <ol class="avanti-breadcrumbs__list">
+      <li v-for="(item, index) in items" :key="item.label" class="avanti-breadcrumbs__item">
+        <RouterLink v-if="item.to && index < items.length - 1" :to="item.to" class="avanti-breadcrumbs__link">
+          {{ item.label }}
+        </RouterLink>
+        <span v-else aria-current="page" class="avanti-breadcrumbs__current">{{ item.label }}</span>
+      </li>
+    </ol>
+  </nav>
+</template>
+
+<style scoped>
+.avanti-breadcrumbs__list {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+}
+.avanti-breadcrumbs__item {
+  display: flex;
+  gap: 8px;
+  color: var(--avanti-muted);
+}
+.avanti-breadcrumbs__item + .avanti-breadcrumbs__item::before {
+  content: '/';
+  color: var(--avanti-muted-light);
+}
+.avanti-breadcrumbs__link:hover {
+  color: var(--avanti-primary);
+}
+.avanti-breadcrumbs__current {
+  color: var(--avanti-text-strong);
+  font-weight: 600;
+}
+</style>
